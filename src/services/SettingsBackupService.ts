@@ -59,11 +59,12 @@ export class PlaceholderSettingsBackupService
       input.onchange = async () => {
         try {
           const file = input.files?.[0];
-          if (!file) return reject(new Error("No file selected"));
+          if (!file) return resolve();
           this.restoreSnapshot(JSON.parse(await file.text()));
           resolve();
         } catch (error) { reject(error); }
       };
+      input.oncancel = () => resolve();
       input.click();
     });
   }
