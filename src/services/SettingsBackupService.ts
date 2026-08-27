@@ -54,17 +54,30 @@ export class PlaceholderSettingsBackupService
   async importSettings(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       const input = document.createElement("input");
+      let settled = false;
+      const finish = (result: boolean) => {
+        if (settled) return;
+        settled = true;
+        window.removeEventListener("focus", onWindowFocus);
+        resolve(result);
+      };
+      const onWindowFocus = () => {
+        window.setTimeout(() => {
+          if (!input.files?.length) finish(false);
+        }, 250);
+      };
       input.type = "file";
       input.accept = "application/json,.json";
       input.onchange = async () => {
         try {
           const file = input.files?.[0];
-          if (!file) return resolve(false);
+          if (!file) return finish(false);
           this.restoreSnapshot(JSON.parse(await file.text()));
-          resolve(true);
+          finish(true);
         } catch (error) { reject(error); }
       };
-      input.oncancel = () => resolve(false);
+      input.oncancel = () => finish(false);
+      window.addEventListener("focus", onWindowFocus, { once: false });
       input.click();
     });
   }
