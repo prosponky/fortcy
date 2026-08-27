@@ -43,6 +43,7 @@ function FortniteSettingsPage() {
     restoreBackup,
     importSettings,
     applyPerformanceSettings,
+    openBackupFolder,
   } = useSettingsStore();
 
   const [lastBackupHovered, setLastBackupHovered] =
@@ -136,6 +137,9 @@ function FortniteSettingsPage() {
             <div style={{ marginTop: "5px", color: "#7f8ca8", fontSize: "11px" }}>Select your saved Fortcy settings backup.</div>
           </div>
           <div style={{ display: "flex", gap: "8px" }}>
+            <button type="button" disabled={isBusy} onClick={() => void openBackupFolder()} style={{ ...actionCardStyle, minHeight: "auto", padding: "9px 12px", display: "flex", alignItems: "center", gap: "7px", opacity: isBusy ? 0.6 : 1 }}>
+              Open backup folder
+            </button>
             <button type="button" disabled={isBusy} onClick={() => void importSettings()} style={{ ...actionCardStyle, minHeight: "auto", padding: "9px 12px", display: "flex", alignItems: "center", gap: "7px", opacity: isBusy ? 0.6 : 1 }}>
               <FileUp size={15} color="#00e5ff" /> Choose backup file
             </button>

@@ -12,6 +12,7 @@ export interface SettingsBackupService {
 
   importSettings(): Promise<boolean>;
   applyPerformanceSettings(): Promise<void>;
+  openBackupFolder(): Promise<void>;
 }
 
 export class PlaceholderSettingsBackupService
@@ -54,6 +55,10 @@ export class PlaceholderSettingsBackupService
 
   async applyPerformanceSettings(): Promise<void> {
     await invoke<string>("apply_fortcy_performance_settings");
+  }
+
+  async openBackupFolder(): Promise<void> {
+    await invoke("open_fortnite_backup_folder");
   }
 
   private downloadSnapshot(snapshot: Record<string, string>, filename: string): void {

@@ -459,6 +459,14 @@ fn restore_fortnite_settings() -> Result<String, String> {
 }
 
 #[tauri::command]
+fn open_fortnite_backup_folder() -> Result<(), String> {
+    let root = fortnite_backup_root().ok_or("Could not locate Downloads")?;
+    fs::create_dir_all(&root).map_err(|e| e.to_string())?;
+    std::process::Command::new("explorer.exe").arg(root).spawn().map_err(|e| e.to_string())?;
+    Ok(())
+}
+
+#[tauri::command]
 fn apply_fortcy_performance_settings() -> Result<String, String> {
     export_fortnite_settings()?;
     let path = fortnite_config_path().ok_or("Could not locate Fortnite settings")?.join("GameUserSettings.ini");
@@ -1680,6 +1688,7 @@ pub fn run() {
                 export_fortnite_settings,
                 restore_fortnite_settings
                 , apply_fortcy_performance_settings
+                , open_fortnite_backup_folder
             ],
         )
         .run(

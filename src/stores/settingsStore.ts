@@ -11,6 +11,7 @@ interface SettingsStore {
   exportSettings: () => Promise<void>;
   importSettings: () => Promise<void>;
   applyPerformanceSettings: () => Promise<void>;
+  openBackupFolder: () => Promise<void>;
 
   resetSettingsState: () => void;
 }
@@ -117,6 +118,10 @@ export const useSettingsStore = create<SettingsStore>((set) => ({
     } catch {
       set({ status: "Performance settings failed", isBusy: false });
     }
+  },
+
+  openBackupFolder: async () => {
+    await services.settingsBackup.openBackupFolder();
   },
 
   resetSettingsState: () => {
