@@ -1,7 +1,6 @@
 import {
   Clock3,
   Download,
-  FileDown,
   FileUp,
   ShieldCheck,
   Upload,
@@ -41,7 +40,6 @@ function FortniteSettingsPage() {
     isBusy,
     createBackup,
     restoreBackup,
-    exportSettings,
     importSettings,
   } = useSettingsStore();
 
