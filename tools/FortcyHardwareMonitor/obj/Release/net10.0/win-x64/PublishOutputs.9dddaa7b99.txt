@@ -1,4 +1,0 @@
-C:\Users\Sponk\fortcy\tools\FortcyHardwareMonitor\bin\Release\net10.0\win-x64\publish\FortcyHardwareMonitor.pdb
-C:\Users\Sponk\fortcy\tools\FortcyHardwareMonitor\bin\Release\net10.0\win-x64\publish\MonoPosixHelper.dll
-C:\Users\Sponk\fortcy\tools\FortcyHardwareMonitor\bin\Release\net10.0\win-x64\publish\libMonoPosixHelper.dll
-C:\Users\Sponk\fortcy\tools\FortcyHardwareMonitor\bin\Release\net10.0\win-x64\publish\FortcyHardwareMonitor.exe

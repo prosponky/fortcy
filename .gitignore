@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# Generated native/.NET build output
+src-tauri/binaries/*.exe
+tools/**/bin/
+tools/**/obj/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
