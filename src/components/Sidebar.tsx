@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { openUrl } from "@tauri-apps/plugin-opener";
 import fortcyLogo from "../assets/fortcy-logo.png";
 
 const navItems = [
@@ -183,7 +184,7 @@ function Sidebar() {
       >
         <button
           type="button"
-          onClick={() => window.open("https://discord.gg/jfxCQwzbQu", "_blank", "noopener,noreferrer")}
+          onClick={() => void openUrl("https://discord.gg/jfxCQwzbQu")}
           onMouseEnter={() =>
             setDiscordHovered(true)
           }
