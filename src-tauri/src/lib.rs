@@ -458,6 +458,23 @@ fn restore_fortnite_settings() -> Result<String, String> {
     Ok(format!("Restored {copied} Fortnite configuration files"))
 }
 
+#[tauri::command]
+fn apply_fortcy_performance_settings() -> Result<String, String> {
+    export_fortnite_settings()?;
+    let path = fortnite_config_path().ok_or("Could not locate Fortnite settings")?.join("GameUserSettings.ini");
+    let mut text = fs::read_to_string(&path).map_err(|e| e.to_string())?;
+    for (key, value) in [("bUseVSync", "False"), ("FrameRateLimit", "0.000000"), ("sg.ViewDistanceQuality", "0"), ("sg.AntiAliasingQuality", "0"), ("sg.ShadowQuality", "0"), ("sg.PostProcessQuality", "0"), ("sg.TextureQuality", "0"), ("sg.EffectsQuality", "0"), ("sg.FoliageQuality", "0"), ("sg.ShadingQuality", "0")] {
+        let prefix = format!("{key}=");
+        if let Some(line) = text.lines().position(|line| line.trim_start().starts_with(&prefix)) {
+            let mut lines: Vec<&str> = text.lines().collect();
+            lines[line] = Box::leak(format!("{key}={value}").into_boxed_str());
+            text = lines.join("\n");
+        } else { text.push_str(&format!("\n{key}={value}")); }
+    }
+    fs::write(&path, text).map_err(|e| e.to_string())?;
+    Ok("Fortcy performance settings applied".into())
+}
+
 fn parse_ipv4_and_port(
     address: &str,
 ) -> Option<(String, u16)> {
@@ -1662,6 +1679,7 @@ pub fn run() {
                 measure_input_latency,
                 export_fortnite_settings,
                 restore_fortnite_settings
+                , apply_fortcy_performance_settings
             ],
         )
         .run(

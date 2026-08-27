@@ -41,6 +41,7 @@ function FortniteSettingsPage() {
     createBackup,
     restoreBackup,
     importSettings,
+    applyPerformanceSettings,
   } = useSettingsStore();
 
   const [lastBackupHovered, setLastBackupHovered] =
@@ -138,6 +139,11 @@ function FortniteSettingsPage() {
             </button>
           </div>
         </Panel>
+
+        <button type="button" disabled={isBusy} onClick={() => void applyPerformanceSettings()} style={{ ...actionCardStyle, minHeight: "72px", opacity: isBusy ? 0.6 : 1 }}>
+          <div style={{ color: "#00e5ff", fontSize: "13px", fontWeight: 700 }}>Apply Fortcy Performance Settings</div>
+          <div style={{ marginTop: "6px", color: "#7f8ca8", fontSize: "11px" }}>Backs up your current settings first, then applies a competitive low-latency preset.</div>
+        </button>
 
         <div
           onMouseEnter={() =>

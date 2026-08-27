@@ -11,6 +11,7 @@ export interface SettingsBackupService {
   exportSettings(): Promise<void>;
 
   importSettings(): Promise<boolean>;
+  applyPerformanceSettings(): Promise<void>;
 }
 
 export class PlaceholderSettingsBackupService
@@ -49,6 +50,10 @@ export class PlaceholderSettingsBackupService
   async exportSettings(): Promise<void> {
     await invoke<string>("export_fortnite_settings");
     this.downloadSnapshot(this.captureSettings(), "fortcy-settings.json");
+  }
+
+  async applyPerformanceSettings(): Promise<void> {
+    await invoke<string>("apply_fortcy_performance_settings");
   }
 
   private downloadSnapshot(snapshot: Record<string, string>, filename: string): void {
