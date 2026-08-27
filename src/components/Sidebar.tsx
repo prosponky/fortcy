@@ -183,6 +183,7 @@ function Sidebar() {
       >
         <button
           type="button"
+          onClick={() => window.open("https://discord.gg/jfxCQwzbQu", "_blank", "noopener,noreferrer")}
           onMouseEnter={() =>
             setDiscordHovered(true)
           }
@@ -246,7 +247,7 @@ function Sidebar() {
             fontSize: "10px",
           }}
         >
-          Fortcy v0.1.0
+          Fortcy v{__APP_VERSION__}
         </div>
       </div>
     </aside>
