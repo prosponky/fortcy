@@ -142,10 +142,11 @@ function FortniteSettingsPage() {
           </div>
         </Panel>
 
-        <button type="button" disabled={isBusy} onClick={() => void applyPerformanceSettings()} style={{ ...actionCardStyle, minHeight: "78px", display: "flex", alignItems: "center", gap: "14px", opacity: isBusy ? 0.6 : 1, background: "linear-gradient(135deg, rgba(0,183,255,.18), rgba(16,34,69,.98))", border: "1px solid rgba(0,229,255,.65)", boxShadow: "0 0 22px rgba(0,188,255,.12)" }}>
+        <div style={{ ...actionCardStyle, minHeight: "78px", display: "flex", alignItems: "center", gap: "14px", opacity: isBusy ? 0.6 : 1, background: "linear-gradient(135deg, rgba(0,183,255,.18), rgba(16,34,69,.98))", border: "1px solid rgba(0,229,255,.65)", boxShadow: "0 0 22px rgba(0,188,255,.12)" }}>
           <span style={{ width: "38px", height: "38px", display: "grid", placeItems: "center", flexShrink: 0, color: "#001018", background: "#00e5ff", borderRadius: "10px", boxShadow: "0 0 16px rgba(0,229,255,.35)" }}><Zap size={20} fill="currentColor" /></span>
-          <span style={{ textAlign: "left" }}><span style={{ display: "block", color: "#ffffff", fontSize: "14px", fontWeight: 800 }}>Apply Fortcy Performance Settings</span><span style={{ display: "block", marginTop: "6px", color: "#9db0cf", fontSize: "11px" }}>Backs up your current settings first, then applies a competitive low-latency preset.</span></span>
-        </button>
+          <span style={{ flex: 1, textAlign: "left" }}><span style={{ display: "block", color: "#ffffff", fontSize: "14px", fontWeight: 800 }}>Fortcy Performance Settings</span><span style={{ display: "block", marginTop: "6px", color: "#9db0cf", fontSize: "11px" }}>Backs up your current settings first, then applies a competitive low-latency preset.</span></span>
+          <button type="button" disabled={isBusy} onClick={() => void applyPerformanceSettings()} style={{ padding: "11px 18px", color: "#001018", background: "#00e5ff", border: 0, borderRadius: "8px", fontSize: "12px", fontWeight: 850, cursor: isBusy ? "default" : "pointer", whiteSpace: "nowrap" }}>Apply</button>
+        </div>
 
         <div
           onMouseEnter={() =>
