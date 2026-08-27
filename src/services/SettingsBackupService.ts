@@ -27,11 +27,13 @@ export class PlaceholderSettingsBackupService
   async createBackup(): Promise<SettingsBackupInfo> {
     const snapshot = this.captureSettings();
     window.localStorage.setItem("fortcy.settingsBackup", JSON.stringify(snapshot));
-    window.localStorage.setItem("fortcy.settingsBackupCreatedAt", new Date().toISOString());
+    const createdAt = new Date().toISOString();
+    window.localStorage.setItem("fortcy.settingsBackupCreatedAt", createdAt);
+    this.downloadSnapshot(snapshot, "fortcy-settings-backup.json");
     return {
       exists: true,
       backupPath: "Fortcy local settings backup",
-      createdAt: new Date().toISOString(),
+      createdAt,
     };
   }
 
@@ -42,12 +44,19 @@ export class PlaceholderSettingsBackupService
   }
 
   async exportSettings(): Promise<void> {
-    const blob = new Blob([JSON.stringify(this.captureSettings(), null, 2)], { type: "application/json" });
+    this.downloadSnapshot(this.captureSettings(), "fortcy-settings.json");
+  }
+
+  private downloadSnapshot(snapshot: Record<string, string>, filename: string): void {
+    const blob = new Blob([JSON.stringify(snapshot, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = "fortcy-settings.json";
+    link.download = filename;
+    link.style.display = "none";
+    document.body.appendChild(link);
     link.click();
+    link.remove();
     URL.revokeObjectURL(url);
   }
 
