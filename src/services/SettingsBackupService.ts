@@ -9,7 +9,7 @@ export interface SettingsBackupService {
 
   exportSettings(): Promise<void>;
 
-  importSettings(): Promise<void>;
+  importSettings(): Promise<boolean>;
 }
 
 export class PlaceholderSettingsBackupService
@@ -51,20 +51,20 @@ export class PlaceholderSettingsBackupService
     URL.revokeObjectURL(url);
   }
 
-  async importSettings(): Promise<void> {
-    await new Promise<void>((resolve, reject) => {
+  async importSettings(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
       const input = document.createElement("input");
       input.type = "file";
       input.accept = "application/json,.json";
       input.onchange = async () => {
         try {
           const file = input.files?.[0];
-          if (!file) return resolve();
+          if (!file) return resolve(false);
           this.restoreSnapshot(JSON.parse(await file.text()));
-          resolve();
+          resolve(true);
         } catch (error) { reject(error); }
       };
-      input.oncancel = () => resolve();
+      input.oncancel = () => resolve(false);
       input.click();
     });
   }

@@ -94,10 +94,10 @@ export const useSettingsStore = create<SettingsStore>((set) => ({
     });
 
     try {
-      await services.settingsBackup.importSettings();
+      const imported = await services.settingsBackup.importSettings();
 
       set({
-        status: "Import complete",
+        status: imported ? "Import complete" : "Nothing imported",
         isBusy: false,
       });
     } catch {
