@@ -1,6 +1,6 @@
 {
   "productName": "fortcy",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "identifier": "com.optimizeprime.fortcy",
   "build": {
     "beforeDevCommand": "npm run dev",
