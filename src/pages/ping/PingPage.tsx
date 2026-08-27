@@ -3,12 +3,13 @@ import {
   Radio,
   Trophy,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import PageHeader from "../../components/PageHeader";
 import PrimaryButton from "../../components/PrimaryButton";
 import { fortnitePingRegions } from "../../services/PingService";
 import { usePingStore } from "../../stores/pingStore";
+import { services } from "../../services";
 
 function PingPage() {
   const {
@@ -23,6 +24,21 @@ function PingPage() {
 
   const [bestRegionHovered, setBestRegionHovered] =
     useState(false);
+  const [matchRecommendation, setMatchRecommendation] = useState<{ games: number; region: string; ping: number } | null>(null);
+
+  useEffect(() => {
+    void services.storage.getBenchmarks().then((benchmarks) => {
+      const samples = benchmarks.map(({ result }) => ({
+        region: result.serverLocation ?? result.matchRegion,
+        ping: result.metrics.gameServerPingMs ?? result.metrics.averagePingMs,
+      })).filter((sample): sample is { region: string; ping: number } => Boolean(sample.region) && sample.ping != null);
+      if (samples.length < 2) return;
+      const grouped = new Map<string, number[]>();
+      samples.forEach(({ region, ping }) => grouped.set(region, [...(grouped.get(region) ?? []), ping]));
+      const recommendation = [...grouped.entries()].map(([region, pings]) => ({ region, ping: Math.round(pings.reduce((sum, value) => sum + value, 0) / pings.length), games: pings.length })).sort((a, b) => a.ping - b.ping)[0];
+      if (recommendation) setMatchRecommendation(recommendation);
+    }).catch(() => undefined);
+  }, []);
 
   let bestRegionIndex = -1;
   let bestLatency: number | null = null;
@@ -334,6 +350,17 @@ function PingPage() {
                   </span>
                 )}
             </div>
+          </div>
+        </div>
+
+        <div style={{ marginTop: "12px", padding: "14px 16px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px", background: "linear-gradient(145deg, rgba(10,27,43,.98), rgba(5,13,25,.99))", border: "1px solid rgba(0,229,255,.3)", borderRadius: "9px" }}>
+          <div>
+            <div style={{ color: "#00e5ff", fontSize: "10px", fontWeight: 900, letterSpacing: ".7px" }}>MATCH SERVER RECOMMENDATION</div>
+            <div style={{ marginTop: "5px", color: "#91a3bf", fontSize: "9px" }}>{matchRecommendation ? `Based on ${matchRecommendation.games} completed game${matchRecommendation.games === 1 ? "" : "s"}.` : "Complete at least 2 tracked games to compare real server performance."}</div>
+          </div>
+          <div style={{ textAlign: "right" }}>
+            <div style={{ color: matchRecommendation ? "#38e54d" : "#71829d", fontSize: "12px", fontWeight: 900 }}>{matchRecommendation?.region ?? "Waiting for games"}</div>
+            {matchRecommendation && <div style={{ marginTop: "3px", color: "#fff", fontSize: "11px", fontWeight: 800 }}>{matchRecommendation.ping} ms average</div>}
           </div>
         </div>
       </div>
