@@ -8,6 +8,8 @@
   "permissions": [
     "core:default",
     "opener:default",
+    "updater:default",
+    "process:default",
     "fs:default",
     "fs:allow-write-text-file",
     "fs:create-app-specific-dirs",

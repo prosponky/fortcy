@@ -40,5 +40,13 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ]
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEE5N0M0MDRGMkNFOTYzQTEKUldTaFkra3NUMEI4cVQ4UnNPd0ZxaGhzZkxEK2xUcEVBZ25zQlJvT0I4dVFkYldqV1JUdWswazMK",
+      "endpoints": [
+        "https://github.com/prosponky/fortcy/releases/latest/download/latest.json"
+      ]
+    }
   }
 }
