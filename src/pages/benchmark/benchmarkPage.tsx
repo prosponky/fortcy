@@ -36,7 +36,7 @@ function BenchmarkPage() {
       icon: Keyboard,
       value:
         allInputLatencyMs === null
-          ? "N/A"
+          ? "0 ms"
           : `${allInputLatencyMs.toFixed(2)} ms`,
     },
     {
@@ -44,7 +44,7 @@ function BenchmarkPage() {
       icon: Gauge,
       value:
         gpuTemperatureC === null
-          ? "N/A"
+          ? "0°C"
           : `${gpuTemperatureC}°C`,
     },
     {
@@ -52,7 +52,7 @@ function BenchmarkPage() {
       icon: Cpu,
       value:
         cpuTemperatureC === null
-          ? "N/A"
+          ? "0°C"
           : `${cpuTemperatureC}°C`,
     },
     {
@@ -60,7 +60,7 @@ function BenchmarkPage() {
       icon: Activity,
       value:
         averageFps === null
-          ? "N/A"
+          ? "0"
           : String(averageFps),
     },
     {
@@ -68,7 +68,7 @@ function BenchmarkPage() {
       icon: Server,
       value:
         gameServerPingMs === null
-          ? "N/A"
+          ? "0 ms"
           : `${gameServerPingMs} ms`,
     },
     {
@@ -76,7 +76,7 @@ function BenchmarkPage() {
       icon: Wifi,
       value:
         averagePingMs === null
-          ? "N/A"
+          ? "0 ms"
           : `${averagePingMs} ms`,
     },
   ];
@@ -136,6 +136,9 @@ function BenchmarkPage() {
           marginTop: "32px",
         }}
       >
+        <div style={{ marginBottom: "14px", padding: "13px 16px", color: "#b7c8df", background: "rgba(0,229,255,.06)", border: "1px solid rgba(0,229,255,.25)", borderRadius: "10px", fontSize: "11px", lineHeight: 1.5 }}>
+          <strong style={{ color: "#00e5ff" }}>Keep Fortcy open while gaming.</strong> We’ll monitor the current match in real time and show its server, ping, FPS, temperatures, and input latency here.
+        </div>
         <div
           style={{
             minHeight: "82px",

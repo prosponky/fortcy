@@ -2,7 +2,6 @@ import {
   BarChart3,
   ExternalLink,
   Gamepad2,
-  Home,
   Settings,
   Signal,
 } from "lucide-react";
@@ -11,11 +10,6 @@ import { NavLink } from "react-router-dom";
 import fortcyLogo from "../assets/fortcy-logo.png";
 
 const navItems = [
-  {
-    to: "/",
-    label: "Home",
-    icon: Home,
-  },
   {
     to: "/benchmark",
     label: "Benchmark",

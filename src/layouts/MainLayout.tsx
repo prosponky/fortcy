@@ -1,12 +1,12 @@
 import {
   Route,
   Routes,
+  Navigate,
 } from "react-router-dom";
 
 import Sidebar from "../components/Sidebar";
 import BenchmarkPage from "../pages/benchmark/benchmarkPage";
 import FortniteSettingsPage from "../pages/fortniteSettings/FortniteSettingsPage";
-import HomePage from "../pages/home/HomePage";
 import PingPage from "../pages/ping/PingPage";
 import ResultsPage from "../pages/results/ResultsPage";
 
@@ -34,10 +34,7 @@ function MainLayout() {
         }}
       >
         <Routes>
-          <Route
-            path="/"
-            element={<HomePage />}
-          />
+          <Route path="/" element={<Navigate to="/benchmark" replace />} />
 
           <Route
             path="/benchmark"
