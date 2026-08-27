@@ -52,7 +52,8 @@ function FortniteSettingsPage() {
     status === "Backup complete" ||
     status === "Restore complete" ||
     status === "Export complete" ||
-    status === "Import complete";
+    status === "Import complete" ||
+    status === "Performance settings applied";
 
   return (
     <>
