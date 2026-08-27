@@ -462,7 +462,11 @@ fn restore_fortnite_settings() -> Result<String, String> {
 fn open_fortnite_backup_folder() -> Result<(), String> {
     let root = fortnite_backup_root().ok_or("Could not locate Downloads")?;
     fs::create_dir_all(&root).map_err(|e| e.to_string())?;
-    std::process::Command::new("explorer.exe").arg(root).spawn().map_err(|e| e.to_string())?;
+    let absolute_root = fs::canonicalize(&root).map_err(|e| e.to_string())?;
+    std::process::Command::new("explorer.exe")
+        .arg(format!("/e,/root,{}", absolute_root.to_string_lossy()))
+        .spawn()
+        .map_err(|e| e.to_string())?;
     Ok(())
 }
 
