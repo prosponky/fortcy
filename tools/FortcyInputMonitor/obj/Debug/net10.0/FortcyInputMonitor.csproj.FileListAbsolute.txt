@@ -1,0 +1,14 @@
+C:\Users\Sponk\fortcy\tools\FortcyInputMonitor\obj\Debug\net10.0\FortcyInputMonitor.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Sponk\fortcy\tools\FortcyInputMonitor\obj\Debug\net10.0\FortcyInputMonitor.AssemblyInfoInputs.cache
+C:\Users\Sponk\fortcy\tools\FortcyInputMonitor\obj\Debug\net10.0\FortcyInputMonitor.AssemblyInfo.cs
+C:\Users\Sponk\fortcy\tools\FortcyInputMonitor\obj\Debug\net10.0\FortcyInputMonitor.csproj.CoreCompileInputs.cache
+C:\Users\Sponk\fortcy\tools\FortcyInputMonitor\bin\Debug\net10.0\FortcyInputMonitor.exe
+C:\Users\Sponk\fortcy\tools\FortcyInputMonitor\bin\Debug\net10.0\FortcyInputMonitor.deps.json
+C:\Users\Sponk\fortcy\tools\FortcyInputMonitor\bin\Debug\net10.0\FortcyInputMonitor.runtimeconfig.json
+C:\Users\Sponk\fortcy\tools\FortcyInputMonitor\bin\Debug\net10.0\FortcyInputMonitor.dll
+C:\Users\Sponk\fortcy\tools\FortcyInputMonitor\bin\Debug\net10.0\FortcyInputMonitor.pdb
+C:\Users\Sponk\fortcy\tools\FortcyInputMonitor\obj\Debug\net10.0\FortcyInputMonitor.dll
+C:\Users\Sponk\fortcy\tools\FortcyInputMonitor\obj\Debug\net10.0\refint\FortcyInputMonitor.dll
+C:\Users\Sponk\fortcy\tools\FortcyInputMonitor\obj\Debug\net10.0\FortcyInputMonitor.pdb
+C:\Users\Sponk\fortcy\tools\FortcyInputMonitor\obj\Debug\net10.0\FortcyInputMonitor.genruntimeconfig.cache
+C:\Users\Sponk\fortcy\tools\FortcyInputMonitor\obj\Debug\net10.0\ref\FortcyInputMonitor.dll

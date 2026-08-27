@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+html,
+body,
+#root {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+html {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: #020712;
+}
+
+img,
+svg {
+  image-rendering: auto;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+select {
+  color-scheme: dark;
+}
+
+select option {
+  color: #ffffff;
+  background: #071426;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@keyframes fortcy-spin {
+  to { transform: rotate(360deg); }
+}
