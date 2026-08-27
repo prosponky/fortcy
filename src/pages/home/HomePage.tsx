@@ -234,6 +234,8 @@ function HomePage({ displayName = "Sponk" }: { displayName?: string }) {
   const [profileName, setProfileName] = useState(() => window.localStorage.getItem("fortcy.epicDisplayName") ?? "");
   const [profileOpen, setProfileOpen] = useState(() => !window.localStorage.getItem("fortcy.profilePromptSeen"));
   const [profileDraft, setProfileDraft] = useState(profileName);
+  const [adminCode, setAdminCode] = useState("");
+  const [adminUnlocked, setAdminUnlocked] = useState(() => window.localStorage.getItem("fortcy.adminUnlocked") === "true");
   const [liveStats, setLiveStats] = useState<{ wins: number | null; kills: number | null; matches: number | null; winRate: number | null } | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -418,7 +420,7 @@ function HomePage({ displayName = "Sponk" }: { displayName?: string }) {
             Your Fortnite stats overview
           </div>
           <div style={{ position: "relative", zIndex: 10, display: "flex", gap: "5px", marginTop: "8px" }}>
-            <button type="button" onClick={() => { setProfileDraft(profileName); setProfileOpen(true); }} style={{ padding: "5px 9px", color: "#8defff", background: "#071a31", border: "1px solid rgba(0,229,255,.55)", borderRadius: "6px", fontSize: "9px", cursor: "pointer", boxShadow: "0 3px 10px rgba(0,0,0,.35)" }}>
+            <button type="button" onClick={() => { setProfileDraft(profileName); setAdminCode(""); setProfileOpen(true); }} style={{ padding: "5px 9px", color: "#8defff", background: "#071a31", border: "1px solid rgba(0,229,255,.55)", borderRadius: "6px", fontSize: "9px", cursor: "pointer", boxShadow: "0 3px 10px rgba(0,0,0,.35)" }}>
               {profileName ? "Switch User" : "Look Up User"}
             </button>
           </div>
@@ -686,6 +688,7 @@ function HomePage({ displayName = "Sponk" }: { displayName?: string }) {
         />
       </div>
 
+      <div style={{ position: "relative", flex: 1, minHeight: 0, display: "flex", flexDirection: "column", gap: "7px" }}>
       <div
         style={{
           height: "94px",
@@ -953,6 +956,15 @@ function HomePage({ displayName = "Sponk" }: { displayName?: string }) {
           </div>
         </div>
       </div>
+      {!adminUnlocked && (
+        <div style={{ position: "absolute", inset: 0, zIndex: 8, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "9px", background: "rgba(3,10,22,.48)", backdropFilter: "blur(7px)", WebkitBackdropFilter: "blur(7px)" }}>
+          <div style={{ padding: "16px 22px", textAlign: "center", background: "rgba(5,16,32,.9)", border: "1px solid rgba(0,229,255,.35)", borderRadius: "12px", boxShadow: "0 16px 45px rgba(0,0,0,.4)" }}>
+            <div style={{ color: "#00e5ff", fontSize: "12px", fontWeight: 900, letterSpacing: ".8px" }}>STATS COMING SOON</div>
+            <div style={{ marginTop: "5px", color: "#9aabc5", fontSize: "9px" }}>Live profile statistics are being connected.</div>
+          </div>
+        </div>
+      )}
+      </div>
       {profileOpen && (
         <div style={{ position: "fixed", inset: 0, zIndex: 50, display: "flex", alignItems: "center", justifyContent: "center", padding: "24px", background: "rgba(1,5,14,.78)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}>
           <div role="dialog" aria-modal="true" aria-label="Fortnite profile lookup" style={{ position: "relative", width: "420px", maxWidth: "100%", padding: "26px", background: "linear-gradient(145deg, #0b1d3a, #040b18)", border: "1px solid rgba(0,229,255,.42)", borderRadius: "16px", boxShadow: "0 24px 80px rgba(0,0,0,.6)" }}>
@@ -961,6 +973,7 @@ function HomePage({ displayName = "Sponk" }: { displayName?: string }) {
             <h2 style={{ margin: "8px 0 7px", color: "#fff", fontSize: "23px" }}>Look up a player</h2>
             <p style={{ margin: 0, color: "#91a3c2", fontSize: "11px", lineHeight: 1.5 }}>Enter an Epic display name to load profile stats through the approved provider.</p>
             <input autoFocus value={profileDraft} onChange={(event) => setProfileDraft(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter" && profileDraft.trim()) { window.localStorage.setItem("fortcy.epicDisplayName", profileDraft.trim()); setProfileName(profileDraft.trim()); setProfileOpen(false); } }} placeholder="Epic display name" style={{ width: "100%", boxSizing: "border-box", marginTop: "18px", padding: "12px", color: "#fff", background: "#061326", border: "1px solid rgba(74,117,184,.7)", borderRadius: "8px" }} />
+            <input type="password" value={adminCode} onChange={(event) => setAdminCode(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter" && adminCode === "sponk") { window.localStorage.setItem("fortcy.adminUnlocked", "true"); setAdminUnlocked(true); setAdminCode(""); setProfileOpen(false); } }} placeholder="Admin code (optional)" style={{ width: "100%", boxSizing: "border-box", marginTop: "8px", padding: "10px 12px", color: "#fff", background: "#061326", border: "1px solid rgba(74,117,184,.45)", borderRadius: "8px" }} />
             <button type="button" disabled={!profileDraft.trim()} onClick={() => { window.localStorage.setItem("fortcy.epicDisplayName", profileDraft.trim()); window.localStorage.setItem("fortcy.profilePromptSeen", "true"); setProfileName(profileDraft.trim()); setProfileOpen(false); }} style={{ width: "100%", marginTop: "12px", padding: "12px", color: "#001018", fontWeight: 850, background: profileDraft.trim() ? "#00e5ff" : "#3d6873", border: 0, borderRadius: "8px", cursor: "pointer" }}>Save profile</button>
             <div style={{ marginTop: "12px", color: "#7185a5", fontSize: "10px" }}>Close this window to continue with the {demoProfileName} demo profile.</div>
           </div>
