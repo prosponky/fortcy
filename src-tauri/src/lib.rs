@@ -430,6 +430,34 @@ fn detect_matchmaking_region(
     }
 }
 
+fn fortnite_config_path() -> Option<PathBuf> { Some(PathBuf::from(env::var("LOCALAPPDATA").ok()?).join("FortniteGame/Saved/Config/WindowsClient")) }
+fn fortnite_backup_root() -> Option<PathBuf> { Some(PathBuf::from(env::var("USERPROFILE").ok()?).join("Downloads/Fortcy-Fortnite-Settings")) }
+fn backup_timestamp() -> String { std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap_or_default().as_secs().to_string() }
+
+#[tauri::command]
+fn export_fortnite_settings() -> Result<String, String> {
+    let source = fortnite_config_path().ok_or("Could not locate Fortnite settings")?;
+    let target = fortnite_backup_root().ok_or("Could not locate Downloads")?.join(backup_timestamp());
+    if !source.exists() { return Err("Fortnite settings folder was not found".into()); }
+    fs::create_dir_all(&target).map_err(|e| e.to_string())?;
+    let mut copied = 0;
+    for name in ["GameUserSettings.ini", "Game.ini", "Input.ini", "Scalability.ini"] { let from = source.join(name); if from.exists() { fs::copy(from, target.join(name)).map_err(|e| e.to_string())?; copied += 1; } }
+    if copied == 0 { return Err("No Fortnite configuration files were found".into()); }
+    Ok(target.to_string_lossy().into_owned())
+}
+
+#[tauri::command]
+fn restore_fortnite_settings() -> Result<String, String> {
+    let root = fortnite_backup_root().ok_or("Could not locate Downloads")?;
+    let latest = fs::read_dir(&root).map_err(|_| "No Fortnite settings backup exists".to_string())?.filter_map(Result::ok).filter(|e| e.path().is_dir()).max_by_key(|e| e.metadata().and_then(|m| m.modified()).ok());
+    let source = latest.ok_or("No Fortnite settings backup exists")?.path();
+    let target = fortnite_config_path().ok_or("Could not locate Fortnite settings")?;
+    fs::create_dir_all(&target).map_err(|e| e.to_string())?;
+    let mut copied = 0;
+    for name in ["GameUserSettings.ini", "Game.ini", "Input.ini", "Scalability.ini"] { let from = source.join(name); if from.exists() { fs::copy(from, target.join(name)).map_err(|e| e.to_string())?; copied += 1; } }
+    Ok(format!("Restored {copied} Fortnite configuration files"))
+}
+
 fn parse_ipv4_and_port(
     address: &str,
 ) -> Option<(String, u16)> {
@@ -1631,7 +1659,9 @@ pub fn run() {
                 measure_latency,
                 get_match_state,
                 get_hardware_temperatures,
-                measure_input_latency
+                measure_input_latency,
+                export_fortnite_settings,
+                restore_fortnite_settings
             ],
         )
         .run(

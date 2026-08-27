@@ -1,4 +1,5 @@
 import type { SettingsBackupInfo } from "../types/services";
+import { invoke } from "@tauri-apps/api/core";
 
 export interface SettingsBackupService {
   getBackupInfo(): Promise<SettingsBackupInfo>;
@@ -25,6 +26,7 @@ export class PlaceholderSettingsBackupService
   }
 
   async createBackup(): Promise<SettingsBackupInfo> {
+    await invoke<string>("export_fortnite_settings");
     const snapshot = this.captureSettings();
     window.localStorage.setItem("fortcy.settingsBackup", JSON.stringify(snapshot));
     const createdAt = new Date().toISOString();
@@ -38,12 +40,14 @@ export class PlaceholderSettingsBackupService
   }
 
   async restoreBackup(): Promise<void> {
+    await invoke<string>("restore_fortnite_settings");
     const raw = window.localStorage.getItem("fortcy.settingsBackup");
     if (!raw) throw new Error("No backup exists yet");
     this.restoreSnapshot(JSON.parse(raw));
   }
 
   async exportSettings(): Promise<void> {
+    await invoke<string>("export_fortnite_settings");
     this.downloadSnapshot(this.captureSettings(), "fortcy-settings.json");
   }
 
