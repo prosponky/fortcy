@@ -99,7 +99,7 @@ function FortniteSettingsPage() {
             />
 
             <div style={actionTitleStyle}>
-              Backup Fortnite Settings
+              Create Backup
             </div>
           </button>
 
@@ -123,58 +123,26 @@ function FortniteSettingsPage() {
             />
 
             <div style={actionTitleStyle}>
-              Restore Backup
+              Restore Latest Backup
             </div>
           </button>
 
-          <button
-            type="button"
-            disabled={isBusy}
-            onClick={() => {
-              void exportSettings();
-            }}
-            style={{
-              ...actionCardStyle,
-              opacity: isBusy ? 0.6 : 1,
-              cursor: isBusy
-                ? "default"
-                : "pointer",
-            }}
-          >
-            <FileDown
-              size={18}
-              color="#00e5ff"
-            />
-
-            <div style={actionTitleStyle}>
-              Export Settings
-            </div>
-          </button>
-
-          <button
-            type="button"
-            disabled={isBusy}
-            onClick={() => {
-              void importSettings();
-            }}
-            style={{
-              ...actionCardStyle,
-              opacity: isBusy ? 0.6 : 1,
-              cursor: isBusy
-                ? "default"
-                : "pointer",
-            }}
-          >
-            <FileUp
-              size={18}
-              color="#00e5ff"
-            />
-
-            <div style={actionTitleStyle}>
-              Import Settings
-            </div>
-          </button>
         </div>
+
+        <Panel style={{ padding: "16px 18px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px" }}>
+          <div>
+            <div style={{ color: "#ffffff", fontSize: "13px", fontWeight: 700 }}>Transfer settings</div>
+            <div style={{ marginTop: "5px", color: "#7f8ca8", fontSize: "11px" }}>Move a backup between computers.</div>
+          </div>
+          <div style={{ display: "flex", gap: "8px" }}>
+            <button type="button" disabled={isBusy} onClick={() => void exportSettings()} style={{ ...actionCardStyle, minHeight: "auto", padding: "9px 12px", display: "flex", alignItems: "center", gap: "7px", opacity: isBusy ? 0.6 : 1 }}>
+              <FileDown size={15} color="#00e5ff" /> Export file
+            </button>
+            <button type="button" disabled={isBusy} onClick={() => void importSettings()} style={{ ...actionCardStyle, minHeight: "auto", padding: "9px 12px", display: "flex", alignItems: "center", gap: "7px", opacity: isBusy ? 0.6 : 1 }}>
+              <FileUp size={15} color="#00e5ff" /> Import file
+            </button>
+          </div>
+        </Panel>
 
         <div
           onMouseEnter={() =>
