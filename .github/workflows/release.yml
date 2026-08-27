@@ -1,0 +1,44 @@
+name: Build and publish Fortcy release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    permissions:
+      contents: write
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build native monitoring sidecars
+        shell: pwsh
+        run: |
+          dotnet publish tools/FortcyHardwareMonitor/FortcyHardwareMonitor.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o src-tauri/binaries/hardware-build
+          dotnet publish tools/FortcyInputMonitor/FortcyInputMonitor.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o src-tauri/binaries/input-build
+          Copy-Item src-tauri/binaries/hardware-build/FortcyHardwareMonitor.exe src-tauri/binaries/FortcyHardwareMonitor-x86_64-pc-windows-msvc.exe
+          Copy-Item src-tauri/binaries/input-build/FortcyInputMonitor.exe src-tauri/binaries/FortcyInputMonitor-x86_64-pc-windows-msvc.exe
+
+      - name: Build signed Fortcy installers
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: Fortcy ${{ github.ref_name }}
+          releaseBody: See the assets below for the Windows installers.
+          releaseDraft: false
+          prerelease: true
