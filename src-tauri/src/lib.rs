@@ -432,7 +432,7 @@ fn detect_matchmaking_region(
 
 fn fortnite_config_path() -> Option<PathBuf> { Some(PathBuf::from(env::var("LOCALAPPDATA").ok()?).join("FortniteGame/Saved/Config/WindowsClient")) }
 fn fortnite_backup_root() -> Option<PathBuf> { Some(PathBuf::from(env::var("USERPROFILE").ok()?).join("Downloads/Fortcy-Fortnite-Settings")) }
-fn backup_timestamp() -> String { std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap_or_default().as_secs().to_string() }
+fn backup_timestamp() -> String { chrono::Local::now().format("FORTNITE SETTINGS %m-%d-%Y %I-%M %p").to_string() }
 
 #[tauri::command]
 fn export_fortnite_settings() -> Result<String, String> {
