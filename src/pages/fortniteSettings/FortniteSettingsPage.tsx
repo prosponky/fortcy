@@ -129,8 +129,8 @@ function FortniteSettingsPage() {
 
         <Panel style={{ padding: "16px 18px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px" }}>
           <div>
-            <div style={{ color: "#ffffff", fontSize: "13px", fontWeight: 700 }}>Use settings from another PC</div>
-            <div style={{ marginTop: "5px", color: "#7f8ca8", fontSize: "11px" }}>Select a Fortcy backup file you received.</div>
+            <div style={{ color: "#ffffff", fontSize: "13px", fontWeight: 700 }}>Upload My Settings</div>
+            <div style={{ marginTop: "5px", color: "#7f8ca8", fontSize: "11px" }}>Select your saved Fortcy settings backup.</div>
           </div>
           <div style={{ display: "flex", gap: "8px" }}>
             <button type="button" disabled={isBusy} onClick={() => void importSettings()} style={{ ...actionCardStyle, minHeight: "auto", padding: "9px 12px", display: "flex", alignItems: "center", gap: "7px", opacity: isBusy ? 0.6 : 1 }}>
